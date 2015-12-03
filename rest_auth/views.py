@@ -38,6 +38,7 @@ class LoginView(GenericAPIView):
         self.token, created = self.token_model.objects.get_or_create(
             user=self.user)
         if getattr(settings, 'REST_SESSION_LOGIN', True):
+            self.user.backend = 'social.backends.facebook.FacebookOAuth2'
             login(self.request, self.user)
 
     def get_response(self):
